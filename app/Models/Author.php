@@ -15,6 +15,20 @@ class Author extends Model
         'last_name',
     ];
 
+    /* 
+        Custom attributes
+    */
+
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
+    protected $appends = ['full_name'];
+
+    /* 
+        Scopes
+    */
     public function scopeFilter($query, $name)
     {
         if ($name) {

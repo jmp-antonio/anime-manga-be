@@ -42,7 +42,7 @@ class AnimeController extends Controller
 
         $animes = Anime::filter($title, $author) // filter using model scopes
             ->orderBy($sortBy, $sortDirection)
-            ->paginate(2, $columnsToGet, 'page', $currentPage);
+            ->paginate(3, $columnsToGet, 'page', $currentPage);
 
         return response()->json(['message' => self::SUCCESS_MESSAGE, 'data' => $animes], Response::HTTP_OK);
     }
