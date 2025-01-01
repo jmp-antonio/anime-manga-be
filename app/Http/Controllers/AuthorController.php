@@ -51,7 +51,7 @@ class AuthorController extends Controller
     */
     public function getOptions(): JsonResponse
     {
-        $authors = Author::all(['id', 'first_name', 'last_name']);
+        $authors = Author::orderBy('first_name', 'asc')->get(['id', 'first_name', 'last_name']);
         return response()->json(['message' => self::SUCCESS_MESSAGE, 'data' => $authors]);
     }
 

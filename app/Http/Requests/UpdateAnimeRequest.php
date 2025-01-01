@@ -16,7 +16,7 @@ class UpdateAnimeRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|unique:animes,title,' . $this->route('id'),
+            'title' => 'required|string|unique:animes,title,' . $this->route('anime'),
             'author_id' => 'required|exists:authors,id',
         ];
     }

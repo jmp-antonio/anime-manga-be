@@ -74,7 +74,7 @@ class AnimeController extends Controller
         try {
             $anime = Anime::create($request->validated());
 
-            return response()->json(['message' => 'Anime created successfully', 'data' => $anime], Response::HTTP_CREATED);
+            return response()->json(['status' => self::SUCCESS_MESSAGE, 'message' => 'Anime created successfully', 'data' => $anime], Response::HTTP_CREATED);
         } catch (\Exception $e) {
             Log::error('Failed to create anime', [
                 'error' => $e->getMessage(),
@@ -102,7 +102,7 @@ class AnimeController extends Controller
 
             $anime->update($request->validated());
 
-            return response()->json(['message' => 'Anime updated successfully', 'data' => $anime]);
+            return response()->json(['status' => self::SUCCESS_MESSAGE, 'message' => 'Anime updated successfully', 'data' => $anime]);
         } catch (\Exception $e) {
             Log::error('Failed to update anime', [
                 'id' => $id,

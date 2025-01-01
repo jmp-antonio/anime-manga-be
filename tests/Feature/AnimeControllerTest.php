@@ -319,6 +319,44 @@ class AnimeControllerTest extends TestCase
             ->assertJsonValidationErrors(['author_id']);
     }
 
+    public function test_update_anime_author_id_only()
+    {
+        // Arrange: Create an author and an anime record
+        $author1 = Author::factory()->create();
+        $author2 = Author::factory()->create();
+        $anime = Anime::factory()->create(['author_id' => $author1->id]);
+
+        // Prepare the updated data with all fields
+        $updatedData = [
+            'title' => $anime->title, // Current title
+            'author_id' => $author2->id, // New author ID
+        ];
+
+        // Act: Make a PUT request to update the anime
+        $response = $this->putJson('/api/animes/' . $anime->id, $updatedData);
+
+        // Assert: Check the response status and structure
+        $response->assertStatus(JsonResponse::HTTP_OK)
+            ->assertJsonStructure([
+                'message',
+                'data' => [
+                    'id',
+                    'title',
+                    'author_id',
+                    'created_at',
+                    'updated_at',
+                ],
+            ]);
+
+        // Verify the record was updated in the database
+        $this->assertDatabaseHas('animes', [
+            'id' => $anime->id,
+            'author_id' => $author2->id, // Check for the new author ID
+            'title' => $anime->title, // Ensure title remains unchanged
+        ]);
+    }
+
+
 
     /* 
         DELETE
