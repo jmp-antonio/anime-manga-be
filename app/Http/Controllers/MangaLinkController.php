@@ -28,6 +28,7 @@ class MangaLinkController extends Controller
             $mangaLink = MangaLink::create($request->validated());
 
             return response()->json([
+                'status' => self::SUCCESS_MESSAGE,
                 'message' => 'Manga link added successfully',
                 'data' => $mangaLink,
             ], Response::HTTP_CREATED);
@@ -74,6 +75,7 @@ class MangaLinkController extends Controller
             $mangaLink->update($request->validated());
 
             return response()->json([
+                'status' => self::SUCCESS_MESSAGE,
                 'message' => 'Manga link updated successfully',
                 'data' => $mangaLink,
             ]);
