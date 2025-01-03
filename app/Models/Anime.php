@@ -22,7 +22,7 @@ class Anime extends Model
     /* 
         Scopes
     */
-    public function scopeFilter($query, $title, $author)
+    public function scopeFilter($query, $title, $author, $sortBy = 'id', $sortDirection = 'asc')
     {
         return $query->when($title, function ($query, $title) {
             return $query->where('title', 'like', '%' . $title . '%');
@@ -31,7 +31,9 @@ class Anime extends Model
                 $query->where('first_name', 'like', '%' . $author . '%')
                     ->orWhere('last_name', 'like', '%' . $author . '%');
             });
-        });
+        })->join('authors', 'animes.author_id', '=', 'authors.id') // Join authors table
+            ->orderBy($sortBy === 'author' ? 'authors.first_name' : $sortBy, $sortDirection) // Sort by first_name if specified
+            ->select('animes.*');
     }
 
     /* 
